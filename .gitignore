@@ -1,0 +1,17 @@
+*
+!.gitignore
+!README.md
+!Doxyfile
+!logo.png
+!*.h
+!*.c
+!*.ewp
+!*.eww
+!*.ewd
+!/doc
+/doc/*
+!/doc/html
+!/doc/html/*
+!/doc/html/search/*
+!/doc/rtf
+!/doc/rtf/*.rtf
