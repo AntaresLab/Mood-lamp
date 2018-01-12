@@ -1,5 +1,5 @@
 # Mood lamp
-This firmware allows to get the mood lamp effect (smooth flow of random colors) using an [AntaresLab RGBW_controller board](https://github.com/AntaresLab/RGBW-controller) and RGB LED strip.
+This firmware allows to get the mood lamp effect (smooth flow of random colors) using an [AntaresLab RGBW_controller board](https://github.com/AntaresLab/RGBW_controller) and RGB LED strip.
 
 Each color is generated using a random number generator, the state of which is updated and stored in non-volatile MCU memory each time power is turned on. Thus, each time power is turned on the color schemes will not be repeated. There are 5 color schemes in total:
 
