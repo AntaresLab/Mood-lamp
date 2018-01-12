@@ -69,6 +69,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">hal.h File Reference</div>  </div>
@@ -81,6 +82,42 @@ $(function() {
 </div>
 <p><a href="hal_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gac9f2bbbef2c4cf0efeaec49cb23e562c"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_GPIO_PINS_MASK</b>&#160;&#160;&#160;0x1C</td></tr>
+<tr class="separator:gac9f2bbbef2c4cf0efeaec49cb23e562c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga45040ccbf146a39a476e0a1e234e155c"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_CLK_HSI_DIV_1_OUTPUT</b>&#160;&#160;&#160;0x00</td></tr>
+<tr class="separator:ga45040ccbf146a39a476e0a1e234e155c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac65e7532240e2c93e1fbc41cb30cac8d"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_UNBLOCK_CODE_1</b>&#160;&#160;&#160;((uint8_t) 0xAE)</td></tr>
+<tr class="separator:gac65e7532240e2c93e1fbc41cb30cac8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf7633b4d27666f9de2f3ee8353230756"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_UNBLOCK_CODE_2</b>&#160;&#160;&#160;((uint8_t) 0x56)</td></tr>
+<tr class="separator:gaf7633b4d27666f9de2f3ee8353230756"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga406a64dc3a40b7999d43e0dd15662c23"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_BLOCK_CODE</b>&#160;&#160;&#160;((uint8_t) 0x08)</td></tr>
+<tr class="separator:ga406a64dc3a40b7999d43e0dd15662c23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadcf26d5802c274b453e094d93c11db0c"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_START_ADDRESS</b>&#160;&#160;&#160;((uint16_t) 0x4000)</td></tr>
+<tr class="separator:gadcf26d5802c274b453e094d93c11db0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3901998e074b05080cc62f253485c63d"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_END_ADDRESS</b>&#160;&#160;&#160;((uint16_t) 0x427F)</td></tr>
+<tr class="separator:ga3901998e074b05080cc62f253485c63d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5afa4ba6bb94590d15a8f3f4cb12ada0"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_READ_BYTE</b>(ADDRESS)&#160;&#160;&#160;(*(PointerAttr uint8_t *) ((MemoryAddressCast) (ADDRESS)))</td></tr>
+<tr class="separator:ga5afa4ba6bb94590d15a8f3f4cb12ada0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f2ac1eb1ebe36e6ef6e16174d55de86"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_WRITE_BYTE</b>(ADDRESS,  DATA)&#160;&#160;&#160;do{*(PointerAttr uint8_t*) ((MemoryAddressCast) (ADDRESS)) = (uint8_t)(DATA);}while(0)</td></tr>
+<tr class="separator:ga4f2ac1eb1ebe36e6ef6e16174d55de86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb8ed4753b5385d5565b4d13c1337260"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_READ_WORD</b>(ADDRESS)&#160;&#160;&#160;((((uint16_t) HAL_EEPROM_READ_BYTE(ADDRESS)) &lt;&lt; 8) + HAL_EEPROM_READ_BYTE((ADDRESS) + 1))</td></tr>
+<tr class="separator:gabb8ed4753b5385d5565b4d13c1337260"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b486c77050685953a060737939fea7c"><td class="memItemLeft" align="right" valign="top">
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_WRITE_WORD</b>(ADDRESS,  DATA)&#160;&#160;&#160;do{HAL_EEPROM_WRITE_BYTE((ADDRESS), (DATA) &gt;&gt; 8);HAL_EEPROM_WRITE_BYTE((ADDRESS) + 1, (DATA));}while(0)</td></tr>
+<tr class="separator:ga6b486c77050685953a060737939fea7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga84f88a73b7bafb4c856cb7ba9f6fe8b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__gpio.html#ga84f88a73b7bafb4c856cb7ba9f6fe8b5">gpio_init</a> ()</td></tr>
@@ -92,24 +129,27 @@ Functions</h2></td></tr>
 <tr class="memitem:ga2847f9e5c10cc20b1699946600617d03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__pwm.html#ga2847f9e5c10cc20b1699946600617d03">pwm_init</a> ()</td></tr>
 <tr class="memdesc:ga2847f9e5c10cc20b1699946600617d03"><td class="mdescLeft">&#160;</td><td class="mdescRight">PWM timer initialization.  <a href="group__hal__pwm.html#ga2847f9e5c10cc20b1699946600617d03">More...</a><br /></td></tr>
 <tr class="separator:ga2847f9e5c10cc20b1699946600617d03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca3caad0522dc12b1e19c84ec4491b31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__pwm.html#gaca3caad0522dc12b1e19c84ec4491b31">set_rgbw_output_value</a> (u8 channel, u16 value)</td></tr>
-<tr class="memdesc:gaca3caad0522dc12b1e19c84ec4491b31"><td class="mdescLeft">&#160;</td><td class="mdescRight">PWM level changing.  <a href="group__hal__pwm.html#gaca3caad0522dc12b1e19c84ec4491b31">More...</a><br /></td></tr>
-<tr class="separator:gaca3caad0522dc12b1e19c84ec4491b31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0878e592ebb278e5029479da11612390"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__pwm.html#ga0878e592ebb278e5029479da11612390">set_rgbw_output_value</a> (uint8_t channel, uint16_t value)</td></tr>
+<tr class="memdesc:ga0878e592ebb278e5029479da11612390"><td class="mdescLeft">&#160;</td><td class="mdescRight">PWM level changing.  <a href="group__hal__pwm.html#ga0878e592ebb278e5029479da11612390">More...</a><br /></td></tr>
+<tr class="separator:ga0878e592ebb278e5029479da11612390"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaba5736e53c1aac1c7e9c3c0ccecad251"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__eeprom.html#gaba5736e53c1aac1c7e9c3c0ccecad251">eeprom_init</a> ()</td></tr>
 <tr class="memdesc:gaba5736e53c1aac1c7e9c3c0ccecad251"><td class="mdescLeft">&#160;</td><td class="mdescRight">EEPROM memory initialization.  <a href="group__hal__eeprom.html#gaba5736e53c1aac1c7e9c3c0ccecad251">More...</a><br /></td></tr>
 <tr class="separator:gaba5736e53c1aac1c7e9c3c0ccecad251"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b4617525034ed2ee5ba5a05e4630efe"><td class="memItemLeft" align="right" valign="top">u16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__eeprom.html#ga7b4617525034ed2ee5ba5a05e4630efe">get_saved_xorshift_value</a> ()</td></tr>
-<tr class="memdesc:ga7b4617525034ed2ee5ba5a05e4630efe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts random number generator initialization value from EEPROM memory.  <a href="group__hal__eeprom.html#ga7b4617525034ed2ee5ba5a05e4630efe">More...</a><br /></td></tr>
-<tr class="separator:ga7b4617525034ed2ee5ba5a05e4630efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga64e997f489b936344e062f34d852588d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__eeprom.html#ga64e997f489b936344e062f34d852588d">save_xorshift_value</a> (u16 value)</td></tr>
-<tr class="memdesc:ga64e997f489b936344e062f34d852588d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves random number generator initialization value into EEPROM memory.  <a href="group__hal__eeprom.html#ga64e997f489b936344e062f34d852588d">More...</a><br /></td></tr>
-<tr class="separator:ga64e997f489b936344e062f34d852588d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae57ccb2f7fcba9ce0105c5e0b5b706c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__eeprom.html#gaae57ccb2f7fcba9ce0105c5e0b5b706c">get_saved_xorshift_value</a> ()</td></tr>
+<tr class="memdesc:gaae57ccb2f7fcba9ce0105c5e0b5b706c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts random number generator initialization value from EEPROM memory.  <a href="group__hal__eeprom.html#gaae57ccb2f7fcba9ce0105c5e0b5b706c">More...</a><br /></td></tr>
+<tr class="separator:gaae57ccb2f7fcba9ce0105c5e0b5b706c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33fe9b663bf092ca165d59ebcd8ecacb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__eeprom.html#ga33fe9b663bf092ca165d59ebcd8ecacb">save_xorshift_value</a> (uint16_t value)</td></tr>
+<tr class="memdesc:ga33fe9b663bf092ca165d59ebcd8ecacb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves random number generator initialization value into EEPROM memory.  <a href="group__hal__eeprom.html#ga33fe9b663bf092ca165d59ebcd8ecacb">More...</a><br /></td></tr>
+<tr class="separator:ga33fe9b663bf092ca165d59ebcd8ecacb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a7dcf3c5c12f0a82bb4ea3c82d6973c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__eeprom.html#ga3a7dcf3c5c12f0a82bb4ea3c82d6973c">eeprom_deinit</a> ()</td></tr>
+<tr class="memdesc:ga3a7dcf3c5c12f0a82bb4ea3c82d6973c"><td class="mdescLeft">&#160;</td><td class="mdescRight">EEPROM memory deinitialization.  <a href="group__hal__eeprom.html#ga3a7dcf3c5c12f0a82bb4ea3c82d6973c">More...</a><br /></td></tr>
+<tr class="separator:ga3a7dcf3c5c12f0a82bb4ea3c82d6973c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file consists hardware-depended calls interface. </p>
 <dl class="section author"><dt>Author</dt><dd><a href="https://github.com/AntaresLab">AntaresLab</a> </dd></dl>
-<dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>06-January-2018 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0.1 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>12-January-2018 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>COPYRIGHT(c) 2018 Sergey Starovoitov aka AntaresLab (<a href="https://github.com/AntaresLab">https://github.com/AntaresLab</a>) <pre class="fragment">This file is part of Mood_lamp.
 
 Mood_lamp is free software: you can redistribute it and/or modify

@@ -1,8 +1,8 @@
 /**
 @file           xorshift.h
 @author         <a href="https://github.com/AntaresLab">AntaresLab</a>
-@version        1.0.0
-@date           06-January-2018
+@version        1.0.1
+@date           12-January-2018
 @brief          This file consists random number generator interface.
 @copyright      COPYRIGHT(c) 2018 Sergey Starovoitov aka AntaresLab (https://github.com/AntaresLab)
 
@@ -33,8 +33,8 @@
 @{
 */
 
-void u16_xorshift_init(u16 value);
-u16 get_random_u16();
+void uint16_xorshift_init(uint16_t value);
+uint16_t get_random_uint16();
 
 ///@}
 

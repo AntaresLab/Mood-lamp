@@ -80,24 +80,24 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga55ecbaebaafc863d0ecf72e8ba2327f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__xorshift.html#ga55ecbaebaafc863d0ecf72e8ba2327f9">u16_xorshift_init</a> (u16 value)</td></tr>
-<tr class="memdesc:ga55ecbaebaafc863d0ecf72e8ba2327f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Xorshift initialization.  <a href="#ga55ecbaebaafc863d0ecf72e8ba2327f9">More...</a><br /></td></tr>
-<tr class="separator:ga55ecbaebaafc863d0ecf72e8ba2327f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae6d10841d0c79aa68260d43d62163d91"><td class="memItemLeft" align="right" valign="top">u16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__xorshift.html#gae6d10841d0c79aa68260d43d62163d91">get_random_u16</a> ()</td></tr>
-<tr class="memdesc:gae6d10841d0c79aa68260d43d62163d91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Random value getter.  <a href="#gae6d10841d0c79aa68260d43d62163d91">More...</a><br /></td></tr>
-<tr class="separator:gae6d10841d0c79aa68260d43d62163d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga055f0a1f7b5c9d5e808b4fb5d2791cf1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__xorshift.html#ga055f0a1f7b5c9d5e808b4fb5d2791cf1">uint16_xorshift_init</a> (uint16_t value)</td></tr>
+<tr class="memdesc:ga055f0a1f7b5c9d5e808b4fb5d2791cf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Xorshift initialization.  <a href="#ga055f0a1f7b5c9d5e808b4fb5d2791cf1">More...</a><br /></td></tr>
+<tr class="separator:ga055f0a1f7b5c9d5e808b4fb5d2791cf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga146abce3539b4fe24bafc5a80503614d"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__xorshift.html#ga146abce3539b4fe24bafc5a80503614d">get_random_uint16</a> ()</td></tr>
+<tr class="memdesc:ga146abce3539b4fe24bafc5a80503614d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Random value getter.  <a href="#ga146abce3539b4fe24bafc5a80503614d">More...</a><br /></td></tr>
+<tr class="separator:ga146abce3539b4fe24bafc5a80503614d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>This module consists <a href="http://www.arklyffe.com/main/2010/08/29/xorshift-pseudorandom-number-generator/">16-bit xorshift random number generator</a> </p>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="gae6d10841d0c79aa68260d43d62163d91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae6d10841d0c79aa68260d43d62163d91">&#9670;&nbsp;</a></span>get_random_u16()</h2>
+<a id="ga146abce3539b4fe24bafc5a80503614d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga146abce3539b4fe24bafc5a80503614d">&#9670;&nbsp;</a></span>get_random_uint16()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">u16 get_random_u16 </td>
+          <td class="memname">uint16_t get_random_uint16 </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -106,20 +106,20 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Random value getter. </p>
-<p>Calculates new random value by <a href="http://www.arklyffe.com/main/2010/08/29/xorshift-pseudorandom-number-generator/">16-bit xorshift method</a>: </p><div class="fragment"><div class="line">u16 <a class="code" href="group__xorshift.html#gae6d10841d0c79aa68260d43d62163d91">get_random_u16</a>(){</div><div class="line">  <span class="keyword">static</span> u16 y16 = 1;</div><div class="line">  y16 ^= (y16 &lt;&lt; 13);</div><div class="line">  y16 ^= (y16 &gt;&gt; 9);</div><div class="line">  <span class="keywordflow">return</span> y16 ^= (y16 &lt;&lt; 7);</div><div class="line">}</div></div><!-- fragment --> <dl class="section return"><dt>Returns</dt><dd>Calculated random value </dd></dl>
+<p>Calculates new random value by <a href="http://www.arklyffe.com/main/2010/08/29/xorshift-pseudorandom-number-generator/">16-bit xorshift method</a>: </p><div class="fragment"><div class="line">u16 get_random_u16(){</div><div class="line">  <span class="keyword">static</span> uint16_t y16 = 1;</div><div class="line">  y16 ^= (y16 &lt;&lt; 13);</div><div class="line">  y16 ^= (y16 &gt;&gt; 9);</div><div class="line">  <span class="keywordflow">return</span> y16 ^= (y16 &lt;&lt; 7);</div><div class="line">}</div></div><!-- fragment --> <dl class="section return"><dt>Returns</dt><dd>Calculated random value </dd></dl>
 
 </div>
 </div>
-<a id="ga55ecbaebaafc863d0ecf72e8ba2327f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga55ecbaebaafc863d0ecf72e8ba2327f9">&#9670;&nbsp;</a></span>u16_xorshift_init()</h2>
+<a id="ga055f0a1f7b5c9d5e808b4fb5d2791cf1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga055f0a1f7b5c9d5e808b4fb5d2791cf1">&#9670;&nbsp;</a></span>uint16_xorshift_init()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void u16_xorshift_init </td>
+          <td class="memname">void uint16_xorshift_init </td>
           <td>(</td>
-          <td class="paramtype">u16&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>

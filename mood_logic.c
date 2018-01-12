@@ -1,8 +1,8 @@
 /**
 @file           mood_logic.c
 @author         <a href="https://github.com/AntaresLab">AntaresLab</a>
-@version        1.0.0
-@date           06-January-2018
+@version        1.0.1
+@date           12-January-2018
 @brief          This file consists mood lamp logic.
 @copyright      COPYRIGHT(c) 2018 Sergey Starovoitov aka AntaresLab (https://github.com/AntaresLab)
 
@@ -31,8 +31,8 @@
 @{
 */
 
-static u16 destination_color[] = {0, 0, 0};                                     ///< Color channels destination PWM values {R, G, B}
-static u16 current_color[] = {0, 0, 0};                                         ///< Color channels current PWM values {R, G, B}
+static uint16_t destination_color[] = {0, 0, 0};                                     ///< Color channels destination PWM values {R, G, B}
+static uint16_t current_color[] = {0, 0, 0};                                         ///< Color channels current PWM values {R, G, B}
 
 /**
 @brief Mood lamp logic handler
@@ -43,9 +43,9 @@ where @f$T_{cycle}@f$ - time of one full color flowing, seconds;
 @f$PWM_{max}@f$ - maximal color output PWM timer walue.
 */
 void rgb_handle(){
-  static u8 first_call = 1;                                                     // First function call flag
-  u16 need_new_color = 1;                                                       // Destination color change flag
-  for(u8 i = 0; i < 3; ++i){                                                    // Make one power step for every color channel
+  static uint8_t first_call = 1;                                                     // First function call flag
+  uint16_t need_new_color = 1;                                                       // Destination color change flag
+  for(uint8_t i = 0; i < 3; ++i){                                                    // Make one power step for every color channel
     if(current_color[i] < destination_color[i]){
       set_rgbw_output_value(i, ++current_color[i]);
       need_new_color = 0;
@@ -55,43 +55,43 @@ void rgb_handle(){
     }
   }
   if(need_new_color){                                                           // If destination color was reached
-    need_new_color = get_random_u16() % ( RGB_ONE_COLOR_PROBABILITY +\
-                                          RGB_TWO_COLORS_PROBABILITY +\
-                                          RGB_THREE_COLORS_PROBABILITY +\
-                                          RGB_ONE_COLOR_AND_RANDOM_PROBABILITY +\
-                                          RGB_TWO_COLORS_AND_RANDOM_PROBABILITY);       // Choose random color scheme for new destination color
+    need_new_color = get_random_uint16() % (    RGB_ONE_COLOR_PROBABILITY +\
+                                                RGB_TWO_COLORS_PROBABILITY +\
+                                                RGB_THREE_COLORS_PROBABILITY +\
+                                                RGB_ONE_COLOR_AND_RANDOM_PROBABILITY +\
+                                                RGB_TWO_COLORS_AND_RANDOM_PROBABILITY); // Choose random color scheme for new destination color
     if(need_new_color < RGB_ONE_COLOR_PROBABILITY){                             // Only one random color channel full power color scheme
-      for(u8 i = 0; i < 3; ++i){
+      for(uint8_t i = 0; i < 3; ++i){
         destination_color[i] = 0;
       }
-      destination_color[get_random_u16() % 3] = U16_MAX;
+      destination_color[get_random_uint16() % 3] = U16_MAX;
     }else if(need_new_color < ( RGB_ONE_COLOR_PROBABILITY +\
                                 RGB_TWO_COLORS_PROBABILITY)){                   // Only two random color channels full power color scheme
-      for(u8 i = 0; i < 3; ++i){
+      for(uint8_t i = 0; i < 3; ++i){
         destination_color[i] = U16_MAX;
       }
-      destination_color[get_random_u16() % 3] = 0;
+      destination_color[get_random_uint16() % 3] = 0;
     }else if(need_new_color < ( RGB_ONE_COLOR_PROBABILITY +\
                                 RGB_TWO_COLORS_PROBABILITY +\
                                 RGB_THREE_COLORS_PROBABILITY)){                 // Three (all) color channels full power color scheme
-      for(u8 i = 0; i < 3; ++i){
+      for(uint8_t i = 0; i < 3; ++i){
         destination_color[i] = U16_MAX;
       }
     }else if(need_new_color < ( RGB_ONE_COLOR_PROBABILITY +\
                                 RGB_TWO_COLORS_PROBABILITY +\
                                 RGB_THREE_COLORS_PROBABILITY +\
                                 RGB_ONE_COLOR_AND_RANDOM_PROBABILITY)){         // One random color channel full power, another color channels - random power color scheme
-      for(u8 i = 0; i < 3; ++i){
-        destination_color[i] = get_random_u16();
+      for(uint8_t i = 0; i < 3; ++i){
+        destination_color[i] = get_random_uint16();
       }
-      destination_color[get_random_u16() % 3] = U16_MAX;
+      destination_color[get_random_uint16() % 3] = U16_MAX;
     }else{                                                                      // One random color channel random power, another color channels - full power color scheme
-      for(u8 i = 0; i < 3; ++i){
+      for(uint8_t i = 0; i < 3; ++i){
         destination_color[i] = U16_MAX;
       }
-      destination_color[get_random_u16() % 3] = get_random_u16();
+      destination_color[get_random_uint16() % 3] = get_random_uint16();
     }
-    if(!first_call) for(u32 i = 0; i < 500000; ++i);                            // Delay if destination color was changed (for color flowing smoothing)
+    if(!first_call) for(uint32_t i = 0; i < 500000; ++i);                            // Delay if destination color was changed (for color flowing smoothing)
   }
   first_call = 0;                                                               // Next function call will not first
 }

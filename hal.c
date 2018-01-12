@@ -1,8 +1,8 @@
 /**
 @file           hal.c
 @author         <a href="https://github.com/AntaresLab">AntaresLab</a>
-@version        1.0.0
-@date           06-January-2018
+@version        1.0.1
+@date           12-January-2018
 @brief          This file consists hardware-depended functions.
 @copyright      COPYRIGHT(c) 2018 Sergey Starovoitov aka AntaresLab (https://github.com/AntaresLab)
 
@@ -34,10 +34,9 @@
 @details Initializes color PWM otput pins.
 */
 void gpio_init(){
-  GPIO_DeInit(GPIOC);
-  GPIO_Init(GPIOC, GPIO_PIN_2, GPIO_MODE_OUT_PP_LOW_FAST);                      // Blue channel
-  GPIO_Init(GPIOC, GPIO_PIN_3, GPIO_MODE_OUT_PP_LOW_FAST);                      // Green channel
-  GPIO_Init(GPIOC, GPIO_PIN_4, GPIO_MODE_OUT_PP_LOW_FAST);                      // Red channel
+  GPIOC->DDR |= HAL_GPIO_PINS_MASK;                                             // Output pins are outputs
+  GPIOC->CR1 |= HAL_GPIO_PINS_MASK;                                             // Push-pull
+  GPIOC->CR2 |= HAL_GPIO_PINS_MASK;                                             // High-speed
 }
 
 ///@}
@@ -53,9 +52,7 @@ void gpio_init(){
 @details Initializes MCU HSI as clock source with Fmcu = 16MHz
 */
 void clk_init(){
-  CLK_DeInit();
-  CLK_SYSCLKConfig(CLK_PRESCALER_CPUDIV1);                                      // Fcpu = Fclk
-  CLK_SYSCLKConfig(CLK_PRESCALER_HSIDIV1);                                      // Fclk is HSI / 1
+  CLK->CKDIVR = HAL_CLK_HSI_DIV_1_OUTPUT;                                       // Fcpu = Fclk = HSI/1
 }
 
 ///@}
@@ -70,21 +67,13 @@ void clk_init(){
 @details Initializes PWM timer in left-aligned mode with Fpwm ~ 244Hz and 16 bit resolution.
 */
 void pwm_init(){
-  TIM1_DeInit();
-  TIM1_TimeBaseInit(0, TIM1_COUNTERMODE_UP, U16_MAX, 0);                        // Fpwm ~ 244Hz, 16 bit resolution
-  TIM1_OC2Init(TIM1_OCMODE_PWM1, TIM1_OUTPUTSTATE_ENABLE,\
-    TIM1_OUTPUTNSTATE_DISABLE, 0, TIM1_OCPOLARITY_HIGH, TIM1_OCNPOLARITY_HIGH,\
-      TIM1_OCIDLESTATE_RESET, TIM1_OCNIDLESTATE_RESET);                         // OC2 - PWM mode 1 otput
-  TIM1_OC2PreloadConfig(ENABLE);                                                // OC2 preload register enable
-  TIM1_OC3Init(TIM1_OCMODE_PWM1, TIM1_OUTPUTSTATE_ENABLE,\
-    TIM1_OUTPUTNSTATE_DISABLE, 0, TIM1_OCPOLARITY_HIGH, TIM1_OCNPOLARITY_HIGH,\
-      TIM1_OCIDLESTATE_RESET, TIM1_OCNIDLESTATE_RESET);                         // OC3 - PWM mode 1 otput
-  TIM1_OC3PreloadConfig(ENABLE);                                                // OC3 preload register enable
-  TIM1_OC4Init(TIM1_OCMODE_PWM1, TIM1_OUTPUTSTATE_ENABLE, 0,\
-    TIM1_OCPOLARITY_HIGH, TIM1_OCIDLESTATE_RESET);                              // OC4 - PWM mode 1 otput
-  TIM1_OC4PreloadConfig(ENABLE);                                                // OC4 preload register enable
-  TIM1_Cmd(ENABLE);                                                             // Start timer
-  TIM1_CtrlPWMOutputs(ENABLE);                                                  // Connect timer PWM outputs to GPIOs
+  TIM1->CCER1 = 0x10;                                                           // Timer channels 2, 3, 4 are on
+  TIM1->CCER2 = 0x11;
+  TIM1->CCMR2 = 0x68;                                                           // Channels are PWM mode 1 outputs, preload registers are on
+  TIM1->CCMR3 = 0x68;
+  TIM1->CCMR4 = 0x68;
+  TIM1->CR1 |= 0x01;                                                            // Start timer
+  TIM1->BKR |= 0x80;                                                            // Connect timer PWM outputs to GPIOs
 }
 
 /**
@@ -95,16 +84,20 @@ apparent brightness linearization: @f$PWM=value^2/value_{max}@f$
 @param[in] value PWM channel value
 @note If invalid channel number received, no any changes makes
 */
-void set_rgbw_output_value(u8 channel, u16 value){
+void set_rgbw_output_value(uint8_t channel, uint16_t value){
+  value = (((uint32_t) value) * value) >> 16;
   switch(channel){
   case 0:                                                                       // Red channel
-    TIM1_SetCompare4((((u32) value) * value) >> 16);
+    TIM1->CCR4H = (uint8_t) (value >> 8);
+    TIM1->CCR4L = (uint8_t) value;
     break;
   case 1:                                                                       // Green channel
-    TIM1_SetCompare3((((u32) value) * value) >> 16);
+    TIM1->CCR3H = (uint8_t) (value >> 8);
+    TIM1->CCR3L = (uint8_t) value;
     break;
   case 2:                                                                       // Blue channel
-    TIM1_SetCompare2((((u32) value) * value) >> 16);
+    TIM1->CCR2H = (uint8_t) (value >> 8);
+    TIM1->CCR2L = (uint8_t) value;
     break;
   default:                                                                      // Everything else - do nothing
     break;
@@ -129,16 +122,15 @@ cells. After that first 2 bytes of EEPROM will contain new addres of number gene
 initialization value relative to the beginning of the EEPROM memory.
 */
 void eeprom_init(){
-  FLASH_Unlock(FLASH_MEMTYPE_DATA);                                             // Unlock EEPROM memory write protect
-  u32 xorshift_address = FLASH_ReadByte(FLASH_DATA_START_PHYSICAL_ADDRESS);     // Random number generator initialization value address calculating
-  xorshift_address <<= 8;
-  xorshift_address += FLASH_ReadByte(FLASH_DATA_START_PHYSICAL_ADDRESS + 1);    // If address is out of EEPROM memory range
-  if((xorshift_address >= (FLASH_DATA_END_PHYSICAL_ADDRESS - FLASH_DATA_START_PHYSICAL_ADDRESS)) || (xorshift_address < 2)){
-    FLASH_ProgramByte(FLASH_DATA_START_PHYSICAL_ADDRESS, 0);                    // change addres to the first EEPROM memory cell after contained addres ones
-    FLASH_ProgramByte(FLASH_DATA_START_PHYSICAL_ADDRESS + 1, 2);
-  }
-  if(xorshift_address & 0x00000001U){                                           // Because 2-byte variables are used, adress must have even value
-    FLASH_ProgramByte(FLASH_DATA_START_PHYSICAL_ADDRESS + 1, xorshift_address & 0x000000FEU);
+  FLASH->DUKR = HAL_EEPROM_UNBLOCK_CODE_1;                                      // Unlock EEPROM memory write protect
+  FLASH->DUKR = HAL_EEPROM_UNBLOCK_CODE_2;
+  if(((HAL_EEPROM_READ_WORD(HAL_EEPROM_START_ADDRESS) + HAL_EEPROM_START_ADDRESS)\
+    >= HAL_EEPROM_END_ADDRESS) || ((HAL_EEPROM_READ_WORD(HAL_EEPROM_START_ADDRESS) +\
+      HAL_EEPROM_START_ADDRESS) < (HAL_EEPROM_START_ADDRESS + 2))){             // If random number generator initialization value address is out of EEPROM memory range
+    HAL_EEPROM_WRITE_WORD(HAL_EEPROM_START_ADDRESS, 0x0002);                    // change addres to the first EEPROM memory cell after contained addres ones
+  }else if((HAL_EEPROM_READ_WORD(HAL_EEPROM_START_ADDRESS) +\
+    HAL_EEPROM_START_ADDRESS) & 0x0001){                                        // Because 2-byte variables are used, adress must have even value
+    HAL_EEPROM_WRITE_WORD(HAL_EEPROM_START_ADDRESS, HAL_EEPROM_READ_WORD(HAL_EEPROM_START_ADDRESS) & 0xFE);
   }
 }
 
@@ -146,38 +138,37 @@ void eeprom_init(){
 @brief Extracts random number generator initialization value from EEPROM memory
 @return Random number generator initialization value
 */
-u16 get_saved_xorshift_value(){
-  u32 address = FLASH_ReadByte(FLASH_DATA_START_PHYSICAL_ADDRESS);              // Random number generator initialization value address calculating
-  address <<= 8;
-  address += FLASH_ReadByte(FLASH_DATA_START_PHYSICAL_ADDRESS + 1);
-  address += FLASH_DATA_START_PHYSICAL_ADDRESS;
-  u16 value = FLASH_ReadByte(address);                                          // High byte
-  value <<= 8;
-  value += FLASH_ReadByte(address + 1);                                         // Low byte
-  return value;
+uint16_t get_saved_xorshift_value(){
+  return HAL_EEPROM_READ_WORD(HAL_EEPROM_READ_WORD(HAL_EEPROM_START_ADDRESS) + HAL_EEPROM_START_ADDRESS);
 }
 
 /**
 @brief Saves random number generator initialization value into EEPROM memory
 @param[in] value New random number generator initialization value
 */
-void save_xorshift_value(u16 value){
-  u32 address = FLASH_ReadByte(FLASH_DATA_START_PHYSICAL_ADDRESS);              // Random number generator initialization value address calculating
-  address <<= 8;
-  address += FLASH_ReadByte(FLASH_DATA_START_PHYSICAL_ADDRESS + 1);
-  address += FLASH_DATA_START_PHYSICAL_ADDRESS;
-  FLASH_ProgramByte(address, value >> 8);
-  FLASH_ProgramByte(address + 1, value);
-  if(get_saved_xorshift_value() != value){                                      // If value wasn't saved correctly (EEPROM cells are damaged)
-    address += 2;                                                               // calculate next random number generator initialization value address
-    if(address > FLASH_DATA_END_PHYSICAL_ADDRESS){                              // If new addres is out of EEPROM memory range 
-      address = FLASH_DATA_START_PHYSICAL_ADDRESS + 2;                          // change addres to the first EEPROM memory cell after contained addres ones
-    }                                                                           // Save new address
-    FLASH_ProgramByte(FLASH_DATA_START_PHYSICAL_ADDRESS, (address - FLASH_DATA_START_PHYSICAL_ADDRESS) >> 8);
-    FLASH_ProgramByte(FLASH_DATA_START_PHYSICAL_ADDRESS + 1, address - FLASH_DATA_START_PHYSICAL_ADDRESS);
-    FLASH_ProgramByte(address, value >> 8);                                     // Save value into the new EEPROM cells
-    FLASH_ProgramByte(address + 1, value & 0x00FF);
+void save_xorshift_value(uint16_t value){
+  HAL_EEPROM_WRITE_WORD(HAL_EEPROM_READ_WORD(HAL_EEPROM_START_ADDRESS) +\
+    HAL_EEPROM_START_ADDRESS, value);
+  if(HAL_EEPROM_READ_WORD(HAL_EEPROM_READ_WORD(HAL_EEPROM_START_ADDRESS) +\
+    HAL_EEPROM_START_ADDRESS) != value){                                        // If value wasn't saved correctly (EEPROM cells are damaged)
+    if((HAL_EEPROM_READ_WORD(HAL_EEPROM_READ_WORD(HAL_EEPROM_START_ADDRESS) +\
+      HAL_EEPROM_START_ADDRESS)) < (HAL_EEPROM_END_ADDRESS - 1)){               // calculate next random number generator initialization value address, save it
+      HAL_EEPROM_WRITE_WORD(HAL_EEPROM_START_ADDRESS,\
+        HAL_EEPROM_READ_WORD(HAL_EEPROM_START_ADDRESS) + 2);
+    }else{
+      HAL_EEPROM_WRITE_WORD(HAL_EEPROM_START_ADDRESS, 0x0002);
+    }
+    HAL_EEPROM_WRITE_WORD(HAL_EEPROM_READ_WORD(HAL_EEPROM_START_ADDRESS) +\
+      HAL_EEPROM_START_ADDRESS, value);                                         // and save value into the new EEPROM cells
   }
+}
+
+/**
+@brief EEPROM memory deinitialization
+@details Blocks EEPROM memory for write protection
+*/
+void eeprom_deinit(){
+  FLASH->IAPSR &= ~HAL_EEPROM_BLOCK_CODE;
 }
 
 ///@}

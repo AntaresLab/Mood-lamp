@@ -69,6 +69,7 @@ $(function() {
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">HAL EEPROM<div class="ingroups"><a class="el" href="group__hal.html">Hardware abstract layer</a></div></div>  </div>
@@ -78,21 +79,74 @@ $(function() {
 <p>Consists EEPROM control functions.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:gac65e7532240e2c93e1fbc41cb30cac8d"><td class="memItemLeft" align="right" valign="top"><a id="gac65e7532240e2c93e1fbc41cb30cac8d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_UNBLOCK_CODE_1</b>&#160;&#160;&#160;((uint8_t) 0xAE)</td></tr>
+<tr class="separator:gac65e7532240e2c93e1fbc41cb30cac8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf7633b4d27666f9de2f3ee8353230756"><td class="memItemLeft" align="right" valign="top"><a id="gaf7633b4d27666f9de2f3ee8353230756"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_UNBLOCK_CODE_2</b>&#160;&#160;&#160;((uint8_t) 0x56)</td></tr>
+<tr class="separator:gaf7633b4d27666f9de2f3ee8353230756"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga406a64dc3a40b7999d43e0dd15662c23"><td class="memItemLeft" align="right" valign="top"><a id="ga406a64dc3a40b7999d43e0dd15662c23"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_BLOCK_CODE</b>&#160;&#160;&#160;((uint8_t) 0x08)</td></tr>
+<tr class="separator:ga406a64dc3a40b7999d43e0dd15662c23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadcf26d5802c274b453e094d93c11db0c"><td class="memItemLeft" align="right" valign="top"><a id="gadcf26d5802c274b453e094d93c11db0c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_START_ADDRESS</b>&#160;&#160;&#160;((uint16_t) 0x4000)</td></tr>
+<tr class="separator:gadcf26d5802c274b453e094d93c11db0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3901998e074b05080cc62f253485c63d"><td class="memItemLeft" align="right" valign="top"><a id="ga3901998e074b05080cc62f253485c63d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_END_ADDRESS</b>&#160;&#160;&#160;((uint16_t) 0x427F)</td></tr>
+<tr class="separator:ga3901998e074b05080cc62f253485c63d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5afa4ba6bb94590d15a8f3f4cb12ada0"><td class="memItemLeft" align="right" valign="top"><a id="ga5afa4ba6bb94590d15a8f3f4cb12ada0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_READ_BYTE</b>(ADDRESS)&#160;&#160;&#160;(*(PointerAttr uint8_t *) ((MemoryAddressCast) (ADDRESS)))</td></tr>
+<tr class="separator:ga5afa4ba6bb94590d15a8f3f4cb12ada0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4f2ac1eb1ebe36e6ef6e16174d55de86"><td class="memItemLeft" align="right" valign="top"><a id="ga4f2ac1eb1ebe36e6ef6e16174d55de86"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_WRITE_BYTE</b>(ADDRESS,  DATA)&#160;&#160;&#160;do{*(PointerAttr uint8_t*) ((MemoryAddressCast) (ADDRESS)) = (uint8_t)(DATA);}while(0)</td></tr>
+<tr class="separator:ga4f2ac1eb1ebe36e6ef6e16174d55de86"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabb8ed4753b5385d5565b4d13c1337260"><td class="memItemLeft" align="right" valign="top"><a id="gabb8ed4753b5385d5565b4d13c1337260"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_READ_WORD</b>(ADDRESS)&#160;&#160;&#160;((((uint16_t) HAL_EEPROM_READ_BYTE(ADDRESS)) &lt;&lt; 8) + HAL_EEPROM_READ_BYTE((ADDRESS) + 1))</td></tr>
+<tr class="separator:gabb8ed4753b5385d5565b4d13c1337260"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b486c77050685953a060737939fea7c"><td class="memItemLeft" align="right" valign="top"><a id="ga6b486c77050685953a060737939fea7c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>HAL_EEPROM_WRITE_WORD</b>(ADDRESS,  DATA)&#160;&#160;&#160;do{HAL_EEPROM_WRITE_BYTE((ADDRESS), (DATA) &gt;&gt; 8);HAL_EEPROM_WRITE_BYTE((ADDRESS) + 1, (DATA));}while(0)</td></tr>
+<tr class="separator:ga6b486c77050685953a060737939fea7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gaba5736e53c1aac1c7e9c3c0ccecad251"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__eeprom.html#gaba5736e53c1aac1c7e9c3c0ccecad251">eeprom_init</a> ()</td></tr>
 <tr class="memdesc:gaba5736e53c1aac1c7e9c3c0ccecad251"><td class="mdescLeft">&#160;</td><td class="mdescRight">EEPROM memory initialization.  <a href="#gaba5736e53c1aac1c7e9c3c0ccecad251">More...</a><br /></td></tr>
 <tr class="separator:gaba5736e53c1aac1c7e9c3c0ccecad251"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7b4617525034ed2ee5ba5a05e4630efe"><td class="memItemLeft" align="right" valign="top">u16&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__eeprom.html#ga7b4617525034ed2ee5ba5a05e4630efe">get_saved_xorshift_value</a> ()</td></tr>
-<tr class="memdesc:ga7b4617525034ed2ee5ba5a05e4630efe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts random number generator initialization value from EEPROM memory.  <a href="#ga7b4617525034ed2ee5ba5a05e4630efe">More...</a><br /></td></tr>
-<tr class="separator:ga7b4617525034ed2ee5ba5a05e4630efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga64e997f489b936344e062f34d852588d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__eeprom.html#ga64e997f489b936344e062f34d852588d">save_xorshift_value</a> (u16 value)</td></tr>
-<tr class="memdesc:ga64e997f489b936344e062f34d852588d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves random number generator initialization value into EEPROM memory.  <a href="#ga64e997f489b936344e062f34d852588d">More...</a><br /></td></tr>
-<tr class="separator:ga64e997f489b936344e062f34d852588d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaae57ccb2f7fcba9ce0105c5e0b5b706c"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__eeprom.html#gaae57ccb2f7fcba9ce0105c5e0b5b706c">get_saved_xorshift_value</a> ()</td></tr>
+<tr class="memdesc:gaae57ccb2f7fcba9ce0105c5e0b5b706c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts random number generator initialization value from EEPROM memory.  <a href="#gaae57ccb2f7fcba9ce0105c5e0b5b706c">More...</a><br /></td></tr>
+<tr class="separator:gaae57ccb2f7fcba9ce0105c5e0b5b706c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga33fe9b663bf092ca165d59ebcd8ecacb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__eeprom.html#ga33fe9b663bf092ca165d59ebcd8ecacb">save_xorshift_value</a> (uint16_t value)</td></tr>
+<tr class="memdesc:ga33fe9b663bf092ca165d59ebcd8ecacb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves random number generator initialization value into EEPROM memory.  <a href="#ga33fe9b663bf092ca165d59ebcd8ecacb">More...</a><br /></td></tr>
+<tr class="separator:ga33fe9b663bf092ca165d59ebcd8ecacb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3a7dcf3c5c12f0a82bb4ea3c82d6973c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hal__eeprom.html#ga3a7dcf3c5c12f0a82bb4ea3c82d6973c">eeprom_deinit</a> ()</td></tr>
+<tr class="memdesc:ga3a7dcf3c5c12f0a82bb4ea3c82d6973c"><td class="mdescLeft">&#160;</td><td class="mdescRight">EEPROM memory deinitialization.  <a href="#ga3a7dcf3c5c12f0a82bb4ea3c82d6973c">More...</a><br /></td></tr>
+<tr class="separator:ga3a7dcf3c5c12f0a82bb4ea3c82d6973c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Consists EEPROM control functions. </p>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga3a7dcf3c5c12f0a82bb4ea3c82d6973c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3a7dcf3c5c12f0a82bb4ea3c82d6973c">&#9670;&nbsp;</a></span>eeprom_deinit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void eeprom_deinit </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>EEPROM memory deinitialization. </p>
+<p>Blocks EEPROM memory for write protection </p>
+
+</div>
+</div>
 <a id="gaba5736e53c1aac1c7e9c3c0ccecad251"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaba5736e53c1aac1c7e9c3c0ccecad251">&#9670;&nbsp;</a></span>eeprom_init()</h2>
 
@@ -113,14 +167,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga7b4617525034ed2ee5ba5a05e4630efe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7b4617525034ed2ee5ba5a05e4630efe">&#9670;&nbsp;</a></span>get_saved_xorshift_value()</h2>
+<a id="gaae57ccb2f7fcba9ce0105c5e0b5b706c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaae57ccb2f7fcba9ce0105c5e0b5b706c">&#9670;&nbsp;</a></span>get_saved_xorshift_value()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">u16 get_saved_xorshift_value </td>
+          <td class="memname">uint16_t get_saved_xorshift_value </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -133,8 +187,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga64e997f489b936344e062f34d852588d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga64e997f489b936344e062f34d852588d">&#9670;&nbsp;</a></span>save_xorshift_value()</h2>
+<a id="ga33fe9b663bf092ca165d59ebcd8ecacb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga33fe9b663bf092ca165d59ebcd8ecacb">&#9670;&nbsp;</a></span>save_xorshift_value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -142,7 +196,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void save_xorshift_value </td>
           <td>(</td>
-          <td class="paramtype">u16&#160;</td>
+          <td class="paramtype">uint16_t&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>

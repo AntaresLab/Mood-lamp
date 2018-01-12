@@ -1,8 +1,8 @@
 /**
 @file           hal.h
 @author         <a href="https://github.com/AntaresLab">AntaresLab</a>
-@version        1.0.0
-@date           06-January-2018
+@version        1.0.1
+@date           12-January-2018
 @brief          This file consists hardware-depended calls interface.
 @copyright      COPYRIGHT(c) 2018 Sergey Starovoitov aka AntaresLab (https://github.com/AntaresLab)
 
@@ -30,47 +30,6 @@
 /**
 @defgroup hal Hardware abstract layer
 @brief This module consists hardware-depended calls
-@details Uses external SPL functions calls:
-@code
-void GPIO_DeInit(GPIO_TypeDef* GPIOx);
-void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_Pin_TypeDef GPIO_Pin, GPIO_Mode_TypeDef GPIO_Mode);
-void CLK_DeInit(void);
-void CLK_SYSCLKConfig(CLK_Prescaler_TypeDef CLK_Prescaler);
-void TIM1_DeInit(void);
-void TIM1_TimeBaseInit(uint16_t TIM1_Prescaler, 
-                       TIM1_CounterMode_TypeDef TIM1_CounterMode,
-                       uint16_t TIM1_Period, uint8_t TIM1_RepetitionCounter);
-void TIM1_Cmd(FunctionalState NewState);
-void TIM1_CtrlPWMOutputs(FunctionalState NewState);
-void TIM1_OC2Init(TIM1_OCMode_TypeDef TIM1_OCMode, 
-                  TIM1_OutputState_TypeDef TIM1_OutputState, 
-                  TIM1_OutputNState_TypeDef TIM1_OutputNState, 
-                  uint16_t TIM1_Pulse, TIM1_OCPolarity_TypeDef TIM1_OCPolarity, 
-                  TIM1_OCNPolarity_TypeDef TIM1_OCNPolarity, 
-                  TIM1_OCIdleState_TypeDef TIM1_OCIdleState, 
-                  TIM1_OCNIdleState_TypeDef TIM1_OCNIdleState);
-void TIM1_OC3Init(TIM1_OCMode_TypeDef TIM1_OCMode, 
-                  TIM1_OutputState_TypeDef TIM1_OutputState, 
-                  TIM1_OutputNState_TypeDef TIM1_OutputNState, 
-                  uint16_t TIM1_Pulse, TIM1_OCPolarity_TypeDef TIM1_OCPolarity, 
-                  TIM1_OCNPolarity_TypeDef TIM1_OCNPolarity, 
-                  TIM1_OCIdleState_TypeDef TIM1_OCIdleState, 
-                  TIM1_OCNIdleState_TypeDef TIM1_OCNIdleState);
-void TIM1_OC4Init(TIM1_OCMode_TypeDef TIM1_OCMode, 
-                  TIM1_OutputState_TypeDef TIM1_OutputState, uint16_t TIM1_Pulse,
-                  TIM1_OCPolarity_TypeDef TIM1_OCPolarity, 
-                  TIM1_OCIdleState_TypeDef TIM1_OCIdleState);
-void TIM1_OC2PreloadConfig(FunctionalState NewState);
-void TIM1_OC3PreloadConfig(FunctionalState NewState);
-void TIM1_OC4PreloadConfig(FunctionalState NewState);
-void TIM1_SetCompare2(uint16_t Compare2);
-void TIM1_SetCompare3(uint16_t Compare3);
-void TIM1_SetCompare4(uint16_t Compare4);
-void FLASH_Unlock(FLASH_MemType_TypeDef FLASH_MemType);
-void FLASH_ProgramByte(uint32_t Address, uint8_t Data);
-uint8_t FLASH_ReadByte(uint32_t Address);
-@endcode
-and u8, u16, u32 datatypes definitions
 @{
 */
 
@@ -80,6 +39,8 @@ and u8, u16, u32 datatypes definitions
 @brief Consists GPIO control functions
 @{
 */
+
+#define HAL_GPIO_PINS_MASK                      0x1C
 
 void gpio_init();
 
@@ -91,6 +52,8 @@ void gpio_init();
 @brief Consists MCU clocking control functions
 @{
 */
+
+#define HAL_CLK_HSI_DIV_1_OUTPUT                0x00
 
 void clk_init();
 
@@ -104,7 +67,7 @@ void clk_init();
 */
 
 void pwm_init();
-void set_rgbw_output_value(u8 channel, u16 value);
+void set_rgbw_output_value(uint8_t channel, uint16_t value);
 
 ///@}
 
@@ -115,9 +78,20 @@ void set_rgbw_output_value(u8 channel, u16 value);
 @{
 */
 
+#define HAL_EEPROM_UNBLOCK_CODE_1               ((uint8_t) 0xAE)
+#define HAL_EEPROM_UNBLOCK_CODE_2               ((uint8_t) 0x56)
+#define HAL_EEPROM_BLOCK_CODE                   ((uint8_t) 0x08)
+#define HAL_EEPROM_START_ADDRESS                ((uint16_t) 0x4000)
+#define HAL_EEPROM_END_ADDRESS                  ((uint16_t) 0x427F)
+#define HAL_EEPROM_READ_BYTE(ADDRESS)           (*(PointerAttr uint8_t *) ((MemoryAddressCast) (ADDRESS)))
+#define HAL_EEPROM_WRITE_BYTE(ADDRESS,DATA)     do{*(PointerAttr uint8_t*) ((MemoryAddressCast) (ADDRESS)) = (uint8_t)(DATA);}while(0)
+#define HAL_EEPROM_READ_WORD(ADDRESS)           ((((uint16_t) HAL_EEPROM_READ_BYTE(ADDRESS)) << 8) + HAL_EEPROM_READ_BYTE((ADDRESS) + 1))
+#define HAL_EEPROM_WRITE_WORD(ADDRESS,DATA)     do{HAL_EEPROM_WRITE_BYTE((ADDRESS), (DATA) >> 8);HAL_EEPROM_WRITE_BYTE((ADDRESS) + 1, (DATA));}while(0)
+
 void eeprom_init();
-u16 get_saved_xorshift_value();
-void save_xorshift_value(u16 value);
+uint16_t get_saved_xorshift_value();
+void save_xorshift_value(uint16_t value);
+void eeprom_deinit();
 
 ///@}
 

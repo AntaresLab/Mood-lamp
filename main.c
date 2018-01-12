@@ -1,8 +1,8 @@
 /**
 @file           main.c
 @author         <a href="https://github.com/AntaresLab">AntaresLab</a>
-@version        1.0.0
-@date           06-January-2018
+@version        1.0.1
+@date           12-January-2018
 @brief          This file consists initialization and main cycle.
 @copyright      COPYRIGHT(c) 2018 Sergey Starovoitov aka AntaresLab (https://github.com/AntaresLab)
 
@@ -38,8 +38,6 @@ Another MCU pins are unused.
 Firmware created in IAR STM8 3.10.1 IDE.
 
 Optimization level: low.
-
-SPL 2.2.0 is used for hardware-level abstraction.
 */
 
 #include "hal.h"
@@ -60,11 +58,12 @@ void main(){
   clk_init();                                                                   // 16MHz HSI initialization
   pwm_init();                                                                   // PWM timer initialization
   eeprom_init();                                                                // EEPROM memory initialization
-  u16_xorshift_init(get_saved_xorshift_value());                                // Xorshift random generator initialization
-  save_xorshift_value(get_random_u16());                                        // Xorshift random generator new state saving (for next power-on)
+  uint16_xorshift_init(get_saved_xorshift_value());                             // Xorshift random generator initialization
+  save_xorshift_value(get_random_uint16());                                     // Xorshift random generator new state saving (for next power-on)
+  eeprom_deinit();                                                              // EEPROM deinitialization for EEPROM data corrupting possibility exclision
   while(1){                                                                     // Main cycle
     rgb_handle();                                                               // Mood lamp logic handling
-    for(u16 i = 0; i < 200; ++i);                                               // Color flow speed regulation
+    for(uint16_t i = 0; i < 200; ++i);                                          // Color flow speed regulation
   }
 }
 

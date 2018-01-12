@@ -1,8 +1,8 @@
 /**
 @file           mood_logic.h
 @author         <a href="https://github.com/AntaresLab">AntaresLab</a>
-@version        1.0.0
-@date           06-January-2018
+@version        1.0.1
+@date           12-January-2018
 @brief          This file consists mood lamp logic parameters and interface.
 @copyright      COPYRIGHT(c) 2018 Sergey Starovoitov aka AntaresLab (https://github.com/AntaresLab)
 
@@ -25,7 +25,7 @@
 #ifndef __MOOD_LOGIC_H__
 #define __MOOD_LOGIC_H__
 
-#include <stm8s.h>
+//#include <stm8s.h>
 
 /**
 @defgroup mood_lamp_logic Mood lamp logic
@@ -39,8 +39,8 @@
 @brief Consists shares of various color schemes in total value
 @{
 */
-#define RGB_ONE_COLOR_PROBABILITY               3                               ///< Only one random color channel full power color scheme share
-#define RGB_TWO_COLORS_PROBABILITY              3                               ///< Only two random color channels full power color scheme share
+#define RGB_ONE_COLOR_PROBABILITY               1                               ///< Only one random color channel full power color scheme share
+#define RGB_TWO_COLORS_PROBABILITY              1                               ///< Only two random color channels full power color scheme share
 #define RGB_THREE_COLORS_PROBABILITY            1                               ///< Three (all) color channels full power color scheme share
 #define RGB_ONE_COLOR_AND_RANDOM_PROBABILITY    2                               ///< One random color channel full power, another color channels - random power color scheme share
 #define RGB_TWO_COLORS_AND_RANDOM_PROBABILITY   2                               ///< One random color channel random power, another color channels - full power color scheme share

@@ -1,8 +1,8 @@
 /**
 @file           xorshift.c
 @author         <a href="https://github.com/AntaresLab">AntaresLab</a>
-@version        1.0.0
-@date           06-January-2018
+@version        1.0.1
+@date           12-January-2018
 @brief          This file consists random number generator.
 @copyright      COPYRIGHT(c) 2018 Sergey Starovoitov aka AntaresLab (https://github.com/AntaresLab)
 
@@ -29,7 +29,7 @@
 @{
 */
 
-static u16 y16 = 1;                                                             ///< Xorshift random number generator base
+static uint16_t y16 = 1;                                                             ///< Xorshift random number generator base
 
 /**
 @brief Xorshift initialization
@@ -37,7 +37,7 @@ static u16 y16 = 1;                                                             
 @param[in] value Initializing value
 @note If value is zero xorshift random number generator will be not initialized
 */
-void u16_xorshift_init(u16 value){
+void uint16_xorshift_init(uint16_t value){
   if(value) y16 = value;
 }
 
@@ -47,7 +47,7 @@ void u16_xorshift_init(u16 value){
 <a href="http://www.arklyffe.com/main/2010/08/29/xorshift-pseudorandom-number-generator/">16-bit xorshift method</a>:
 @code
 u16 get_random_u16(){
-  static u16 y16 = 1;
+  static uint16_t y16 = 1;
   y16 ^= (y16 << 13);
   y16 ^= (y16 >> 9);
   return y16 ^= (y16 << 7);
@@ -55,7 +55,7 @@ u16 get_random_u16(){
 @endcode
 @return Calculated random value
 */
-u16 get_random_u16(){
+uint16_t get_random_uint16(){
   y16 ^= (y16 << 13);
   y16 ^= (y16 >> 9);
   return y16 ^= (y16 << 7);
