@@ -21,8 +21,8 @@ If you will find any mistakes or inaccuracies in my projects, please notify me a
 
 I will be glad, if you modify, impove or port my projects to other platforms, standards, compilers, boards, etc. Please notify me if you do this, and I will mention here about that.
 ***
-All souce code files, except for stm8s.h, here are Copyright (c) 2018 AntaresLab aka Sergey Starovoitov serega.starovoitov@mail.ru.
+All souce code files here, except for stm8s.h, are Copyright (c) 2018 AntaresLab aka Sergey Starovoitov serega.starovoitov@mail.ru.
 
-stm8s.h file is Copyright (c) 2014 STMicroelectronics
+stm8s.h file is Copyright (c) 2014 STMicroelectronics.
 
 Provided under the GNU GPL v3.
