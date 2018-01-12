@@ -31,8 +31,8 @@
 @{
 */
 
-static uint16_t destination_color[] = {0, 0, 0};                                     ///< Color channels destination PWM values {R, G, B}
-static uint16_t current_color[] = {0, 0, 0};                                         ///< Color channels current PWM values {R, G, B}
+static uint16_t destination_color[] = {0, 0, 0};                                ///< Color channels destination PWM values {R, G, B}
+static uint16_t current_color[] = {0, 0, 0};                                    ///< Color channels current PWM values {R, G, B}
 
 /**
 @brief Mood lamp logic handler
@@ -43,9 +43,9 @@ where @f$T_{cycle}@f$ - time of one full color flowing, seconds;
 @f$PWM_{max}@f$ - maximal color output PWM timer walue.
 */
 void rgb_handle(){
-  static uint8_t first_call = 1;                                                     // First function call flag
-  uint16_t need_new_color = 1;                                                       // Destination color change flag
-  for(uint8_t i = 0; i < 3; ++i){                                                    // Make one power step for every color channel
+  static uint8_t first_call = 1;                                                // First function call flag
+  uint16_t need_new_color = 1;                                                  // Destination color change flag
+  for(uint8_t i = 0; i < 3; ++i){                                               // Make one power step for every color channel
     if(current_color[i] < destination_color[i]){
       set_rgbw_output_value(i, ++current_color[i]);
       need_new_color = 0;
@@ -91,7 +91,7 @@ void rgb_handle(){
       }
       destination_color[get_random_uint16() % 3] = get_random_uint16();
     }
-    if(!first_call) for(uint32_t i = 0; i < 500000; ++i);                            // Delay if destination color was changed (for color flowing smoothing)
+    if(!first_call) for(uint32_t i = 0; i < 500000; ++i);                       // Delay if destination color was changed (for color flowing smoothing)
   }
   first_call = 0;                                                               // Next function call will not first
 }

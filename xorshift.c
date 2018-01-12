@@ -29,7 +29,7 @@
 @{
 */
 
-static uint16_t y16 = 1;                                                             ///< Xorshift random number generator base
+static uint16_t y16 = 1;                                                        ///< Xorshift random number generator base
 
 /**
 @brief Xorshift initialization
