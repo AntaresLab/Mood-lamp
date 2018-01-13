@@ -39,11 +39,11 @@
 @brief Consists shares of various color schemes in total value
 @{
 */
-#define RGB_ONE_COLOR_PROBABILITY               1                               ///< Only one random color channel full power color scheme share
-#define RGB_TWO_COLORS_PROBABILITY              1                               ///< Only two random color channels full power color scheme share
+#define RGB_ONE_COLOR_PROBABILITY               2                               ///< Only one random color channel full power color scheme share
+#define RGB_TWO_COLORS_PROBABILITY              2                               ///< Only two random color channels full power color scheme share
 #define RGB_THREE_COLORS_PROBABILITY            1                               ///< Three (all) color channels full power color scheme share
-#define RGB_ONE_COLOR_AND_RANDOM_PROBABILITY    2                               ///< One random color channel full power, another color channels - random power color scheme share
-#define RGB_TWO_COLORS_AND_RANDOM_PROBABILITY   2                               ///< One random color channel random power, another color channels - full power color scheme share
+#define RGB_ONE_COLOR_AND_RANDOM_PROBABILITY    1                               ///< One random color channel full power, another color channels - random power color scheme share
+#define RGB_TWO_COLORS_AND_RANDOM_PROBABILITY   1                               ///< One random color channel random power, another color channels - full power color scheme share
 ///@}
 
 void rgb_handle();
